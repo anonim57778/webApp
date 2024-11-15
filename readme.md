@@ -11,8 +11,7 @@
     - [Dockerfile](https://doka.guide/tools/dockerfile/)
     - [docker-compose](https://ru.hexlet.io/courses/docker-basics/lessons/docker-compose/theory_unit)
 - Работать с TypeScript и понимать что такое дженерики: [Ссылка](https://www.youtube.com/watch?v=V7hBejCH1HI)
-- Работать с маршрутизацией в Next.js 14: [Ссылка](https://my-js.org/docs/guide/nextjs/#%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%80%D0%BE%D1%83%D1%82%D0%BE%D0%B2)
-    - Страницы (page.tsx)
+- Работать с маршрутизацией в Next.js 14: [Ссылка](https://my-js.org/docs/guide/nextjs/#%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%80%D0%BE%D1%83%D1%82%D0%BE%D0%B2) Страницы (page.tsx)
     - Макеты (layout.tsx)
     - Шаблоны можно пропустить
     - Группы путей: [Ссылка](https://my-js.org/docs/guide/nextjs/#%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B-%D1%80%D0%BE%D1%83%D1%82%D0%BE%D0%B2)
@@ -77,6 +76,9 @@
 #### src/server/telegram_auth.ts
 Авторизация пользователя с помощью [initData](https://docs.telegram-mini-apps.com/platform/init-data) 
 
+#### src/server/telegra/webhook.ts
+Получение обновлений с api телеграмма с помощью [webhook](https://www.calltouch.ru/blog/chto-takoe-vebhuk-kak-i-zachem-ego-ispolzovat/)
+
 #### src/server/api/trpc.ts
 Смотреть в самый низ файла
 
@@ -87,3 +89,7 @@
 - index.ts Добавляет роутеры из папки routers в бек, чтобы ими можно было пользоваться
 
 Хорошая практика - создавать по роутеру на каждую модель базы данных
+
+
+### Чтобы запустить проект будет нужен домен и подключение к cloudflared
+Обратитесь за доменом и подключением к Алексею
