@@ -65,9 +65,7 @@ function WebsiteLayoutInner({
   if (
     launchParams &&
     !ALLOWED_PLATFORMS.includes(
-      Buffer.from(launchParams?.platform ?? "INVALID")
-        .toString("base64")
-        .toLowerCase(),
+      Buffer.from(launchParams?.platform ?? "INVALID").toString("base64"),
     )
   ) {
     return <p>Играть можно только на телефоне</p>;
