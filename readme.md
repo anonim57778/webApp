@@ -2,10 +2,14 @@
 
 ### Что нужно установить:
 - nodejs 22+ [Ссылка](https://nodejs.org/en/download/prebuilt-installer/current)
-- PgAdmin [Ссылка](https://www.pgadmin.org/)
+- docker [Ссылка](https://docs.docker.com/desktop/setup/install/windows-install/)
+
 
 ### Перед работой необходимо уметь:
 Всем:
+- Работать базово с docker и docker-compose [ссылка](https://docs.docker.com/manuals/):
+    - [Dockerfile](https://doka.guide/tools/dockerfile/)
+    - [docker-compose](https://ru.hexlet.io/courses/docker-basics/lessons/docker-compose/theory_unit)
 - Работать с TypeScript и понимать что такое дженерики: [Ссылка](https://www.youtube.com/watch?v=V7hBejCH1HI)
 - Работать с маршрутизацией в Next.js 14: [Ссылка](https://my-js.org/docs/guide/nextjs/#%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%80%D0%BE%D1%83%D1%82%D0%BE%D0%B2)
     - Страницы (page.tsx)
@@ -20,6 +24,7 @@
     - Роутеры
 
 Бек:
+- Уметь работать с бд PgAdmin [Ссылка](https://www.pgadmin.org/)
 - Понимать основы DrizzleORM: [Ссылка](https://orm.drizzle.team/docs/get-started/postgresql-new)
 - Уметь работать с Telegraf: [Ссылка](https://www.youtube.com/watch?v=ssaG31RBao0)
 
