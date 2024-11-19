@@ -7,9 +7,6 @@
 
 ### Перед работой необходимо уметь:
 Всем:
-- Работать базово с docker и docker-compose [ссылка](https://docs.docker.com/manuals/):
-    - [Dockerfile](https://doka.guide/tools/dockerfile/)
-    - [docker-compose](https://ru.hexlet.io/courses/docker-basics/lessons/docker-compose/theory_unit)
 - Работать с TypeScript и понимать что такое дженерики: [Ссылка](https://www.youtube.com/watch?v=V7hBejCH1HI)
 - Работать с маршрутизацией в Next.js 14: [Ссылка](https://my-js.org/docs/guide/nextjs/#%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%80%D0%BE%D1%83%D1%82%D0%BE%D0%B2) Страницы (page.tsx)
     - Макеты (layout.tsx)
@@ -21,6 +18,10 @@
     - useMutation
     - invalidate
     - Роутеры
+- Работать базово с docker и docker-compose [ссылка](https://docs.docker.com/manuals/):
+    - [Dockerfile](https://doka.guide/tools/dockerfile/)
+    - [docker-compose](https://ru.hexlet.io/courses/docker-basics/lessons/docker-compose/theory_unit)
+
 
 Бек:
 - Уметь работать с бд PgAdmin [Ссылка](https://www.pgadmin.org/)
