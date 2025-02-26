@@ -1,4 +1,4 @@
-import { House, Users } from "lucide-react";
+import { House, Users, User } from "lucide-react";
 import type { ReactNode } from "react";
 import NavbarItem from "../(landing)/navbar_item";
 

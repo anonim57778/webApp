@@ -34,7 +34,7 @@ export function SetStartParam(param: string | undefined) {
   startParam = param;
 }
 
-export function MainTRPCReactProvider(props: { children: React.ReactNode }) {
+export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>

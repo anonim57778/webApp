@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { cn } from "~/lib/client/utils";
-import CopyButton from "../copy_button";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -37,10 +36,6 @@ const CopyInput = React.forwardRef<HTMLInputElement, CopyInputProps>(
           ref={ref}
           disabled={true}
           {...props}
-        />
-        <CopyButton
-          value={props.value}
-          className="absolute right-0 inset-y-0"
         />
       </div>
     );

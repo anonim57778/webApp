@@ -8,3 +8,8 @@ export const IdSchema = z.object({
     })
     .min(1, "Необходимо указать идентификатор"),
 });
+
+export const second = 1000;
+export const minute = second * 60;
+export const hour = minute * 60;
+export const day = hour * 24;

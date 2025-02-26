@@ -1,5 +1,5 @@
 import { env } from "~/env";
-import bot from ".";
+import {bot} from ".";
 
 async function Webhook() {
   const del = await bot.telegram.deleteWebhook();

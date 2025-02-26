@@ -20,7 +20,7 @@ export default function AdminLayout({
   }
 
   // Кидаем 404 ошибку, если пользователь не админ
-  if (!session?.isAdmin) {
+  if (session?.role !== "ADMIN") {
     notFound();
   }
 

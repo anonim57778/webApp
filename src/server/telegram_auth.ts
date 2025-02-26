@@ -3,15 +3,11 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { env } from "~/env";
 import { db } from "./db";
-import { users } from "./db/schema";
+import { invites, users } from "./db/schema";
 
 export async function GetTelegramAuth(headers: Headers) {
   // Получаем из Headers данные о пользователе
   const initDataRaw = headers.get("x-trpc-init-data");
-  // Получаем стартовый аргумент (например ссылка на бота: t.me/mycoolbot?start=123123)
-  // В startParam будет 123
-  // Это полезно для реферальных ссылок
-  const startParam = headers.get("x-trpc-start-param");
 
   if (!initDataRaw) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -41,18 +37,29 @@ export async function GetTelegramAuth(headers: Headers) {
       lastName: true,
       username: true,
       telegramId: true,
-    },
+      role: true,
+      photoUrl: true,
+      gigaBalance: true,
+      ticketsBalance: true,
+    }
   });
 
   // Если пользователя нет, то создаем его
   if (!user) {
+    const id = crypto.randomUUID();
+
     user = (
       await db
         .insert(users)
         .values({
           ...initData.user,
-          id: undefined,
+          id: id,
           telegramId: initData.user!.id.toString(),
+          photoUrl: initData.user.photoUrl,
+          role:
+          initData.user!.id.toString() === env.MAIN_ADMIN_TELEGRAM_ID
+            ? "ADMIN"
+            : "USER",
         })
         .returning({
           id: users.id,
@@ -60,13 +67,39 @@ export async function GetTelegramAuth(headers: Headers) {
           lastName: users.lastName,
           username: users.username,
           telegramId: users.telegramId,
+          role: users.role,
+          photoUrl: users.photoUrl,
+          gigaBalance: users.gigaBalance,
+          ticketsBalance: users.ticketsBalance,
         })
     )[0]!;
+
+    if (initData.startParam) {
+      const ownerLink = await db.query.users.findFirst({
+        where: eq(users.telegramId, initData.startParam),
+      });
+
+      if (ownerLink) {
+				await db.transaction(async (trx) => {
+					await trx
+						.update(users)
+						.set({
+              gigaBalance: ownerLink.gigaBalance + 1000,
+              ticketsBalance: ownerLink.ticketsBalance + 1,
+						})
+						.where(eq(users.id, ownerLink.id));
+					const invite = (await trx.insert(invites).values({
+						inviteId: user?.id ?? "",
+						inviterId: ownerLink.id ?? "",
+					}).returning({
+            invitedAt: invites.invitedAt,
+          }))[0]!;
+				});
+      }
+    }
   }
 
   return {
     ...user,
-    // Если пользователь администратор, то даем админку
-    isAdmin: user.telegramId === env.MAIN_ADMIN_TELEGRAM_ID,
   };
 }
