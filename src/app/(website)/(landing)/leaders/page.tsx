@@ -20,6 +20,7 @@ export default function LeadersContestsPage() {
     const [currentContest] = api.contest.get.useSuspenseQuery();
     //Получение текущего пользователяЫ
     const [session] = api.user.session.useSuspenseQuery();
+    
     const [state, setState] = useState("leaders");
     const place = currentContest?.winners.find(winner => winner.userId === session.id)?.place ?? null;
 
@@ -34,7 +35,7 @@ export default function LeadersContestsPage() {
                 ) : (
                     <div className="flex flex-col text-center">
                         <h1 className="text-[32px] font-medium">🎉 Конкурс 🎉</h1>
-                        <h1 className="text-2xl font-normal opacity-60">Зови друзей — собирай<br/> GIGA! Награды ждут! 💸🔥</h1>
+                        <h1 className="text-2xl font-normal opacity-60">Зови друзей — собирай<br/> билеты! Награды ждут! 💸🔥</h1>
                     </div>
                 )}
                 <TabsList className="grid w-full grid-cols-2 bg-card gap-4 h-fit">
@@ -61,7 +62,7 @@ export default function LeadersContestsPage() {
                     currentContest?.status == "ACTIVE" ? (
                         <Card className="flex justify-center">
                             <div className="flex gap-4 items-center justify-center">
-                                <Timer roleUser={session.role} id={currentContest?.id ?? ""} timeRemaining={currentContest?.endDate ?? new Date()}/>
+                                <Timer id={currentContest?.id ?? ""} timeRemaining={currentContest?.endDate ?? new Date()}/>
                             </div>
                         </Card>
                     ) : (

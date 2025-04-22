@@ -3,6 +3,7 @@ import { adminProcedure, createTRPCRouter, publicProcedure } from "../../trpc";
 import { contests, invites, users, winsUserContest } from "~/server/db/schema";
 import { and, eq, gte, lte } from "drizzle-orm";
 import { IdSchema } from "~/lib/shared/types/utils";
+import { Calculate } from "~/components/reword-calc";
 
 
 
@@ -49,7 +50,7 @@ export const contestRouter = createTRPCRouter({
                 }
             });
 
-            return contest[contest.length - 1] ?? null;
+            return contest.sort((a,b) => b.startDate.getTime() - a.startDate.getTime())[0] ?? null;
         }),
     update: adminProcedure
         .input(ContestSchema.merge(IdSchema))
@@ -65,18 +66,21 @@ export const contestRouter = createTRPCRouter({
         }),
     createWinners: publicProcedure
         .mutation(async ({ ctx }) => {
-            const contest = await ctx.db.query.contests.findMany();
-
             if (ctx.user.role !== "ADMIN") {
                 return;
             }
+
+            const contest = await ctx.db.query.contests.findMany();
+
+            const currentContest = contest.sort((a, b) => b.startDate.getTime() - a.startDate.getTime())[0];
+
         
             const leaders = (await ctx.db.query.users.findMany({
                 with: {
                     inviters: {
                         where: and(
-                        gte(invites.invitedAt, contest[0]!.startDate),
-                        lte(invites.invitedAt, contest[0]!.endDate),
+                        gte(invites.invitedAt, currentContest!.startDate),
+                        lte(invites.invitedAt, currentContest!.endDate),
                         )
                     }
                 }
@@ -86,11 +90,11 @@ export const contestRouter = createTRPCRouter({
                 ctx.db.transaction(async (trx) => {
                     await trx.insert(winsUserContest).values({
                         userId: leader.id,
-                        contestId: contest[contest.length - 1]!.id,
+                        contestId: currentContest!.id,
                         place: i + 1,
                     });
                     await trx.update(users).set({
-                        gigaBalance: leader.gigaBalance + contest[contest.length - 1]!.reward!
+                        ticketsBalance: leader.ticketsBalance + Calculate(i + 1, currentContest!.reward),
                     }).where(eq(users.id, leader.id));
                 })
 

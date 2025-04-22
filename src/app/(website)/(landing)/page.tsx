@@ -29,7 +29,7 @@ export default function LandingPage() {
         </Link>
 
         {session.role == "ADMIN" && (
-          <Link href="/admin/tasks" className="w-full">
+          <Link href="/admin/contests" className="w-full">
             <Button className="bg-secondary w-full">Админка</Button>
           </Link>
         )}

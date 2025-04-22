@@ -84,7 +84,7 @@ export default function CreateUpdateContest({
 						Редактировать
 					</DropdownMenuItem>
 				) : (
-					<Button>Создать</Button>
+					<Button className="w-full">Создать</Button>
 				)}
 			</SheetTrigger>
 			<SheetContent className="space-y-4 overflow-y-auto">

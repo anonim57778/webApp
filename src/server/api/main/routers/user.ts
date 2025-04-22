@@ -4,7 +4,7 @@ import { env } from "~/env";
 import { IdSchema } from "~/lib/shared/types/utils";
 import { adminProcedure, createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { invites, users} from "~/server/db/schema";
-import { bot, isUserSubscribtion } from "~/server/telegram";
+import { isUserSubscribtion } from "~/server/telegram";
 
 export const userRouter = createTRPCRouter({
   // Возвращаем информацию о пользователе
@@ -33,12 +33,14 @@ export const userRouter = createTRPCRouter({
       // Если конкурса нет, возвращаем null
       if (!contest) return null;
 
+      const currentContest = contest.sort((a,b) => b.startDate.getTime() - a.startDate.getTime())[0]!;
+
       const leaders = (await ctx.db.query.users.findMany({
         with: {
           inviters: {
             where: and(
-              gte(invites.invitedAt, contest[0]!.startDate),
-              lte(invites.invitedAt, contest[0]!.endDate),
+              gte(invites.invitedAt, currentContest!.startDate),
+              lte(invites.invitedAt, currentContest!.endDate),
             ),
           }
         }

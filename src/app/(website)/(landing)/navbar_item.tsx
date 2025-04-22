@@ -8,8 +8,10 @@ import { api } from "~/trpc/main/react";
 
 export default function NavbarItem({
   item,
+  className
 }: {
   item: NavbarItem;
+  className?: string;
 }) {
   const pathname = usePathname();
   const [session] = api.user.session.useSuspenseQuery();
@@ -27,7 +29,7 @@ export default function NavbarItem({
       )}
     >
       {item.icon}
-      <span>{item.title}</span>
+      <span className={className}>{item.title}</span>
     </Link>
   );
 }

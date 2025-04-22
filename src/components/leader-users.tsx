@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import React from "react";
-import tonCoin from "~/../public/images/toncoinLogo.svg";
+import { Calculate } from "./reword-calc";
 
 export default function LeadersUsers({
   name,
@@ -76,18 +75,18 @@ export default function LeadersUsers({
                       className="text-base font-normal"
                     >
                       {position === 1
-                        ? 50
+                        ? Calculate(position, 10)
                         : position === 2
-                        ? 20
+                        ? Calculate(position, 10)
                         : position === 3
-                        ? 5
+                        ? Calculate(position, 10)
                         : null}
                     </span>
                   ) : (
                     // Позиция без медали
                     <span className="text-sm font-bold text-gray-500">#{position}</span>
                   )}
-                <Image src={tonCoin as string} className="size-5" alt="ton coin"/>
+                <h1>🎟</h1>
             </div>
         )}
       </div>

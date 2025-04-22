@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { Hourglass } from "lucide-react";
 import { api } from "~/trpc/main/react";
 
-export default function Timer({timeRemaining, id, roleUser} : {timeRemaining: Date, id: string, roleUser: string}) {
+export default function Timer({timeRemaining, id} : {timeRemaining: Date, id: string}) {
   const updateContestStatus = api.contest.setStatus.useMutation();
   const createWinners = api.contest.createWinners.useMutation();
+
+  const utils = api.useUtils();
 
   const [time, setTime] = useState<{
     days: number;
@@ -41,9 +43,6 @@ export default function Timer({timeRemaining, id, roleUser} : {timeRemaining: Da
   }, [countTo]);
 
   const handleTimerEnd = async () => {
-    if (roleUser !== "ADMIN") {
-      return;
-    }
     try {
       // Создаем победителей
       await createWinners.mutateAsync();
@@ -53,10 +52,9 @@ export default function Timer({timeRemaining, id, roleUser} : {timeRemaining: Da
 
       // Сбрасываем таймер
       setTime(null);
+      await utils.contest.get.invalidate();
     } catch (error) {
       console.error("Ошибка при обновлении статуса конкурса:", error);
-    } finally {
-      window.location.reload();
     }
   };
 

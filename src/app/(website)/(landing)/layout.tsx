@@ -10,7 +10,6 @@ export default function LandingLayout({
   children: React.ReactNode;
 }) {
   const [result] = api.user.checkSub.useSuspenseQuery();
-  
   if (!result) {
     return <Unsubscribtion/>
   }
